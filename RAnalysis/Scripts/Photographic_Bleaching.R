@@ -111,7 +111,7 @@ Blch$Treatment <- Blch$Trt3
 
 Blch.data <- Blch[,-c(5:8)]
 
-write.table(Blch.data,"Data/Bleaching_Score.csv",sep=",", row.names=FALSE)
+write.table(Blch.data,"Data/Color_Score.csv",sep=",", row.names=FALSE)
 
 pdf("Output/Photographic_Bleaching.pdf")
 par(mar=c(10,4,2,2)) #bottom, left, top and right margins respectively
