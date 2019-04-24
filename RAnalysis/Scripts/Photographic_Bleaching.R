@@ -87,8 +87,6 @@ Blch  <- cbind(Blch, means$Time, means$Treatment.1) #make a dataframe of PC1 and
 colnames(Blch) <- c("Bleaching.Score", "PLUG.ID", "Timepoint", "Treatment")
 Blch$Group <- paste(Blch$Timepoint, Blch$Treatment)
 
-# write.table(Blch,"~/MyProjects/Holobiont_Integration/RAnalysis/Output/Bleaching_Score.csv",sep=",", row.names=FALSE)
-
 #write.table(Blch, file = "~/MyProjects/Holobiont_Integration/RAnalysis/Output/Bleaching_Score.csv", append = FALSE, quote = TRUE, sep = ",",
             #eol = "\n", na = "NA", dec = ".", row.names = TRUE,
             #col.names = TRUE, qmethod = c("escape", "double"),
@@ -110,6 +108,10 @@ Blch$Trt <- ifelse(grepl(0, Blch$Treatment), "Dark", Blch$Treatment)
 Blch$Trt2 <- ifelse(grepl(1, Blch$Treatment), "Light", Blch$Trt)
 Blch$Trt3 <- ifelse(grepl(2, Blch$Treatment), "Light.Fed", Blch$Trt2)
 Blch$Treatment <- Blch$Trt3
+
+Blch.data <- Blch[,-c(5:8)]
+
+write.table(Blch.data,"Data/Bleaching_Score.csv",sep=",", row.names=FALSE)
 
 pdf("Output/Photographic_Bleaching.pdf")
 par(mar=c(10,4,2,2)) #bottom, left, top and right margins respectively
