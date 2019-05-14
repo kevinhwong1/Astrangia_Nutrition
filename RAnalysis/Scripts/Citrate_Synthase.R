@@ -75,40 +75,5 @@ mean.cs.H <- ggplot(mean.cs.host, aes(x=Exp.Cond, y=cs.activity.mUmg)) +
   theme(legend.position = "none")
 
 ggsave(file = "../Output/Mean.CS.H.pdf", mean.cs.H)
+write.csv(mean.cs.host.plug, file = "../Data/CS.host.calculated.csv")
 
-### Comparing CS with Fo
-
-PAM <- read.csv("../Data/PAM_Apoc2019.csv")
-PAM.T2 <- PAM %>%
-  filter(Timepoint == "T2")
-
-CS.Host.PAM <- merge(mean.cs.host.plug, PAM.T2, by = "Plug")
-
-CS.PAM.H <- ggplot(CS.Host.PAM, aes(x=Fo, y=cs.activity.mUmg)) +
-  geom_point() +   
-#  geom_smooth(method=lm) +
-  xlab("Fo") + ylab("Host CS Activity mUmg")+ #Axis titles
-  theme_bw() + theme(panel.border = element_rect(color="black", fill=NA, size=0.75), panel.grid.major = element_blank(), #Makes background theme white
-                     panel.grid.minor = element_blank(), axis.line = element_blank()) +
-  theme(axis.text = element_text(size = 16, color = "black"),
-        axis.title = element_text(size = 18, color = "black"),
-        axis.title.x = element_blank())+
-  theme(legend.position = "none") +
-  facet_wrap(~Exp.Cond)
-
-ggsave(file = "../Output/CS.Fo.pdf", CS.PAM.H)
-
-NL <- CS.Host.PAM %>%
-  filter(Exp.Cond == "No.Light")
-NL.lm <- lm (cs.activity.mUmg ~ Fo, data = NL)
-NL.lmsummary <- summary(NL.lm)
-
-L <- CS.Host.PAM %>%
-  filter(Exp.Cond == "Light")
-L.lm <- lm (cs.activity.mUmg ~ Fo, data = L)
-L.lmsummary <- summary(L.lm)
-
-LF <- CS.Host.PAM %>%
-  filter(Exp.Cond == "Light.Feed")
-LF.lm <- lm (cs.activity.mUmg ~ Fo, data = LF)
-LF.lmsummary <- summary(LF.lm)
